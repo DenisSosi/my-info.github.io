@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Page</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: black;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      display: none; /* Скрываем до клика */
+    }
+
+    .background img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .container {
+      text-align: center;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      display: none; /* Скрываем до клика */
+    }
+
+    .views {
+      margin-bottom: 20px;
+      opacity: 0.7;
+    }
+
+    .avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .button {
+      text-decoration: none;
+      color: white;
+      padding: 10px 10px;
+      border: 2px solid white;
+      border-radius: 5px;
+      display: inline-block;
+      margin-top: 10px;
+      transition: background 0.3s;
+    }
+    .button:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .server {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+
+    .join-button {
+      display: block;
+      margin-top: 10px;
+      color: #bbb;
+      text-decoration: none;
+    }
+
+    #music-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+      display: none; /* Скрыта по умолчанию */
+      z-index: 3;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="overlay" id="overlay">
+    Click anywhere
+  </div>
+
+  <div class="background" id="bg">
+    <img src="output.gif" alt="Background GIF">
+  </div>
+
+  <audio id="bg-music" loop>
+    <source src="y2mate.com - 4K  Tokyo GhoulAMVEditFEAR ME_1080pFHR.mp4" type="audio/mp4">
+    Your browser does not support the audio element.
+  </audio>
+
+  <div class="container" id="content">
+    <p class="views">👁️ 1920</p>
+    <div class="profile">
+      <img class="avatar" src="clipboard_image_d752c6cba0ba64df.png" alt="CHitarik">
+      <h1>CHitarik</h1>
+      <div class="server">
+        <p>Delta - Твой лучший выбор</p>
+        <span>🟢 17 204 Online</span>
+      </div>
+      <div class="links">
+        <a href="https://t.me/dlcformine" class="button" target="_blank">Telegram ➜</a>
+        <a href="https://discord.gg/wQd9wcgy" class="button" target="_blank">Discord ➜</a>
+      </div>
+    </div>
+  </div>
+
+  <button id="music-toggle">🔊</button>
+
+  <script>
+    let isPlaying = false;
+    const audio = document.getElementById('bg-music');
+    const musicToggleButton = document.getElementById('music-toggle');
+
+    document.addEventListener('click', function() {
+      let overlay = document.getElementById('overlay');
+      let background = document.getElementById('bg');
+      let content = document.getElementById('content');
+      
+      overlay.style.display = 'none';
+      background.style.display = 'block';
+      content.style.display = 'block';
+
+      if (!isPlaying) {
+        audio.muted = false;
+        audio.volume = 1.0;
+        audio.play().then(() => {
+          console.log("Музыка играет!");
+          isPlaying = true;
+          musicToggleButton.style.display = 'block';
+          musicToggleButton.textContent = "🔇";
+        }).catch(error => {
+          console.log("Ошибка воспроизведения:", error);
+        });
+      }
+    });
+
+    musicToggleButton.addEventListener('click', function() {
+      if (isPlaying) {
+        audio.pause();
+        this.textContent = "🔊";
+        isPlaying = false;
+        console.log("Музыка остановлена!");
+      } else {
+        audio.play().then(() => {
+          this.textContent = "🔇";
+          isPlaying = true;
+          console.log("Музыка играет!");
+        }).catch(error => {
+          console.log("Ошибка воспроизведения:", error);
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
